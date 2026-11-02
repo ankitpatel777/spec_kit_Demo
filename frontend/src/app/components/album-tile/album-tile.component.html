@@ -1,0 +1,28 @@
+<article class="album-tile">
+  <img
+    *ngIf="album.coverImageUrl; else emptyCover"
+    [src]="album.coverImageUrl"
+    [alt]="'Cover for ' + album.name"
+  />
+  <ng-template #emptyCover>
+    <div class="empty-cover" aria-hidden="true">No cover photo</div>
+  </ng-template>
+  <div class="content">
+    <div class="title-row">
+      <h2>{{ album.name }}</h2>
+      <button
+        type="button"
+        class="edit-button"
+        (click)="edit.emit(album)"
+        [attr.aria-label]="'Edit ' + album.name"
+      >
+        Edit
+      </button>
+    </div>
+    <p class="date-range">{{ album.dateRange }}</p>
+    <span class="photo-count"
+      >{{ album.photoCount }} {{ album.photoCount === 1 ? 'photo' : 'photos' }}</span
+    >
+    <p *ngIf="album.isEmpty" class="empty-message">This album has no photos yet.</p>
+  </div>
+</article>

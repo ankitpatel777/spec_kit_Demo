@@ -1,0 +1,58 @@
+:host {
+  display: block;
+}
+
+.editor {
+  display: grid;
+  gap: 16px;
+  padding: 24px;
+  background: #fff;
+  border: 1px solid #dfe5ef;
+  border-radius: 16px;
+}
+
+h2 {
+  margin: 0;
+}
+label {
+  display: grid;
+  gap: 6px;
+  font-weight: 600;
+}
+input {
+  min-width: 0;
+  padding: 10px 12px;
+  border: 1px solid #cbd4e1;
+  border-radius: 8px;
+}
+.date-fields,
+.actions {
+  display: flex;
+  gap: 12px;
+}
+.date-fields > * {
+  flex: 1;
+}
+.actions {
+  justify-content: flex-end;
+}
+button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #155eef;
+  color: white;
+  cursor: pointer;
+}
+button.secondary {
+  background: #e9edf4;
+  color: #1b2430;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.error {
+  margin: 0;
+  color: #b42318;
+}

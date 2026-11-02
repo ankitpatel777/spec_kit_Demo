@@ -1,0 +1,40 @@
+# Visual Studio / .NET
+.vs/
+bin/
+obj/
+*.user
+*.suo
+TestResults/
+
+# Node / Angular
+node_modules/
+.angular/
+dist/
+coverage/
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pfx
+*.p12
+*.pem
+*.key
+
+# Logs and local data
+*.log
+logs/
+*.mdf
+*.ldf
+*.bak
+*.tmp
+
+# Editor
+.idea/
+
+# Local tool settings
+.claude/settings.local.json
+
+# OS
+Thumbs.db
+.DS_Store

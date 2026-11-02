@@ -1,0 +1,86 @@
+.overview-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 20px 64px;
+}
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+h1 {
+  margin: 0 0 6px;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+}
+.page-header p {
+  margin: 0;
+  color: #4d5d79;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+button {
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #155eef;
+  color: white;
+  cursor: pointer;
+}
+button.secondary {
+  background: #e9edf4;
+  color: #1b2430;
+}
+button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.album-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+.empty-library {
+  margin-top: 28px;
+  padding: 32px;
+  border: 1px dashed #b8c2d1;
+  border-radius: 16px;
+  text-align: center;
+  color: #56657a;
+}
+.empty-library h2 {
+  margin: 0 0 8px;
+  color: #1b2430;
+}
+.empty-library p {
+  margin: 0;
+}
+.status,
+.notice {
+  color: #344054;
+}
+.notice {
+  padding: 10px 12px;
+  background: #ecfdf3;
+  border-radius: 8px;
+}
+.error {
+  padding: 10px 12px;
+  color: #b42318;
+  background: #fef3f2;
+  border-radius: 8px;
+}
+app-album-editor {
+  margin-bottom: 20px;
+}
+@media (max-width: 720px) {
+  .page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}

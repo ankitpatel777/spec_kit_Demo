@@ -1,0 +1,24 @@
+<form class="editor" (ngSubmit)="submit()">
+  <h2>{{ album ? 'Edit album' : 'Create album' }}</h2>
+  <label>
+    Album name
+    <input name="name" [(ngModel)]="name" maxlength="255" required />
+  </label>
+  <div class="date-fields" *ngIf="!album?.isDateGroup">
+    <label>
+      Start date
+      <input name="startDate" type="date" [(ngModel)]="startDate" />
+    </label>
+    <label>
+      End date
+      <input name="endDate" type="date" [(ngModel)]="endDate" />
+    </label>
+  </div>
+  <p class="error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</p>
+  <div class="actions">
+    <button type="button" class="secondary" (click)="cancel.emit()">Cancel</button>
+    <button type="submit" [disabled]="saving || !name.trim()">
+      {{ saving ? 'Saving…' : 'Save album' }}
+    </button>
+  </div>
+</form>

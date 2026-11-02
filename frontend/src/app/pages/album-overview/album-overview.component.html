@@ -1,0 +1,45 @@
+<main class="overview-shell">
+  <header class="page-header">
+    <div>
+      <h1>Photo Album Organizer</h1>
+      <p>Browse your photos by date and keep albums organized.</p>
+    </div>
+    <div class="toolbar">
+      <button type="button" class="secondary" (click)="reload()" [disabled]="loading || importing">
+        Refresh
+      </button>
+      <button type="button" class="secondary" (click)="importPhotos()" [disabled]="importing">
+        Import local photos
+      </button>
+      <button type="button" (click)="createAlbum()">Create album</button>
+    </div>
+  </header>
+
+  <p *ngIf="notice" class="notice" role="status">{{ notice }}</p>
+  <p *ngIf="errorMessage" class="error" role="alert">{{ errorMessage }}</p>
+  <p *ngIf="loading" class="status" role="status">Loading albums...</p>
+  <p *ngIf="importing" class="status" role="status">Importing local photos...</p>
+
+  <app-album-editor
+    *ngIf="showEditor"
+    [album]="selectedAlbum"
+    [saving]="saving"
+    [errorMessage]="editorError"
+    (save)="saveAlbum($event)"
+    (cancel)="closeEditor()"
+  >
+  </app-album-editor>
+
+  <section class="album-grid" aria-label="Albums">
+    <app-album-tile
+      *ngFor="let album of albums"
+      [album]="album"
+      (edit)="editAlbum($event)"
+    ></app-album-tile>
+  </section>
+
+  <section *ngIf="!loading && !errorMessage && albums.length === 0" class="empty-library">
+    <h2>Your library is ready</h2>
+    <p>Import photos from your configured local folder or create an album to get started.</p>
+  </section>
+</main>

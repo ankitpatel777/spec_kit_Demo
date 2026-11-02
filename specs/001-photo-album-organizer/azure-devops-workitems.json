@@ -1,0 +1,441 @@
+{
+  "feature": {
+    "type": "Epic",
+    "title": "Photo Album Organizer",
+    "requirements": ["FR-001", "FR-002", "FR-003", "FR-004", "FR-005", "FR-006", "FR-007", "FR-008", "FR-009", "FR-010"],
+    "description": "Build a photo organizer with albums grouped by date and a tile preview of each album.\n\nFunctional scope:\n- Organize photos into date-based albums and date groups\n- Support album preview tiles with representative images, titles, and date ranges\n- Allow creation, update, and refresh flows for albums as collection metadata changes\n- Handle missing or inconsistent date metadata gracefully\n\nAcceptance criteria:\n- Users can identify the correct album for a date-based collection in under 10 seconds during a typical library browse session.\n- The album overview presents each album in a way that allows users to recognize a collection from the tile preview without opening the album.\n- A user can add new photos to a date group and confirm the album view updates consistently within a single session.\n- At least 90% of common photo collections are discoverable by date grouping and tile preview without requiring a full search workflow.\n- Users can distinguish recent and historical albums without confusion caused by inconsistent date metadata or naming.",
+    "children": [
+      {
+        "type": "Feature",
+        "title": "Project Setup and Shared Infrastructure",
+        "requirements": ["FR-001", "FR-003", "FR-007", "FR-009", "FR-010"],
+        "description": "Set up the local-first application structure, shared infrastructure, and common domain models required before the user stories can be implemented safely.",
+        "children": [
+          {
+            "type": "Task",
+            "id": "T001",
+            "title": "Create backend and frontend project folders per the plan in backend/src/, backend/tests/, frontend/src/, and frontend/tests/",
+            "description": "Create the backend and frontend project folders per the plan in backend/src/, backend/tests/, frontend/src/, and frontend/tests/",
+            "acceptanceCriteria": [
+              "Required folders exist for the backend and frontend projects.",
+              "The folder structure matches the implementation plan for the feature."
+            ],
+            "filePath": "backend/src/, backend/tests/, frontend/src/, frontend/tests/"
+          },
+          {
+            "type": "Task",
+            "id": "T002",
+            "title": "Initialize the Angular frontend project in frontend/ with the required dependencies for the album overview experience",
+            "description": "Initialize the Angular frontend project in frontend/ with the required dependencies for the album overview experience",
+            "acceptanceCriteria": [
+              "Angular app initializes successfully in the frontend directory.",
+              "Required dependencies for the album overview experience are installed."
+            ],
+            "filePath": "frontend/"
+          },
+          {
+            "type": "Task",
+            "id": "T003",
+            "title": "Initialize the ASP.NET Core backend in backend/ with the required project references and local API startup configuration",
+            "description": "Initialize the ASP.NET Core backend in backend/ with the required project references and local API startup configuration",
+            "acceptanceCriteria": [
+              "ASP.NET Core backend initializes in the backend directory.",
+              "Required project references and startup configuration support local API access."
+            ],
+            "filePath": "backend/"
+          },
+          {
+            "type": "Task",
+            "id": "T004",
+            "title": "Configure environment settings for local SQL Server access with Windows authentication and local image storage paths in backend/src/PhotoOrganizer.Api/appsettings.Development.json",
+            "description": "Configure environment settings for local SQL Server access with Windows authentication and local image storage paths in backend/src/PhotoOrganizer.Api/appsettings.Development.json",
+            "acceptanceCriteria": [
+              "The local development configuration references SQL Server Windows authentication.",
+              "Image storage paths are configured for local development usage."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Api/appsettings.Development.json"
+          },
+          {
+            "type": "Task",
+            "id": "T005",
+            "title": "Configure linting, formatting, and code quality tooling for the Angular and .NET projects",
+            "description": "Configure linting, formatting, and code quality tooling for the Angular and .NET projects",
+            "acceptanceCriteria": [
+              "Angular lint/formatting tooling is enabled.",
+              ".NET code quality tooling is enabled."
+            ],
+            "filePath": "frontend/ and backend/"
+          },
+          {
+            "type": "Task",
+            "id": "T006",
+            "title": "Define the core domain model for Photo and Album in backend/src/PhotoOrganizer.Domain/Photo.cs and backend/src/PhotoOrganizer.Domain/Album.cs",
+            "description": "Define the core domain model for Photo and Album in backend/src/PhotoOrganizer.Domain/Photo.cs and backend/src/PhotoOrganizer.Domain/Album.cs",
+            "acceptanceCriteria": [
+              "Photo domain model includes required metadata and date fields.",
+              "Album domain model includes collection metadata and relationship to photos."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Domain/Photo.cs and backend/src/PhotoOrganizer.Domain/Album.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T007",
+            "title": "Implement the SQL Server database context and entity mappings in backend/src/PhotoOrganizer.Infrastructure/Data/PhotoOrganizerDbContext.cs",
+            "description": "Implement the SQL Server database context and entity mappings in backend/src/PhotoOrganizer.Infrastructure/Data/PhotoOrganizerDbContext.cs",
+            "acceptanceCriteria": [
+              "Database context includes Photo, Album, and AlbumPhoto mappings.",
+              "SQL Server entity mapping matches the domain model and date grouping requirements."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Infrastructure/Data/PhotoOrganizerDbContext.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T008",
+            "title": "Create the database schema and migration scripts for Photo, Album, and AlbumPhoto records in backend/database/schema/",
+            "description": "Create the database schema and migration scripts for Photo, Album, and AlbumPhoto records in backend/database/schema/",
+            "acceptanceCriteria": [
+              "Schema scripts exist for the core entities.",
+              "Migration scripts preserve date-based album and photo relationships."
+            ],
+            "filePath": "backend/database/schema/"
+          },
+          {
+            "type": "Task",
+            "id": "T009",
+            "title": "Implement the local image storage abstraction and file metadata access in backend/src/PhotoOrganizer.Infrastructure/FileStorage/",
+            "description": "Implement the local image storage abstraction and file metadata access in backend/src/PhotoOrganizer.Infrastructure/FileStorage/",
+            "acceptanceCriteria": [
+              "File storage abstraction supports local image access.",
+              "Metadata retrieval is available for album cover and file preview flows."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Infrastructure/FileStorage/"
+          },
+          {
+            "type": "Task",
+            "id": "T010",
+            "title": "Implement the application service boundary and dependency injection setup in backend/src/PhotoOrganizer.Application/ and backend/src/PhotoOrganizer.Api/Program.cs",
+            "description": "Implement the application service boundary and dependency injection setup in backend/src/PhotoOrganizer.Application/ and backend/src/PhotoOrganizer.Api/Program.cs",
+            "acceptanceCriteria": [
+              "Application services are registered with dependency injection.",
+              "API startup uses the configured service boundary correctly."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Application/ and backend/src/PhotoOrganizer.Api/Program.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T011",
+            "title": "Add consistent error handling, logging, and validation rules for missing or invalid photo dates in backend/src/PhotoOrganizer.Api/Middleware/ and backend/src/PhotoOrganizer.Application/Validators/",
+            "description": "Add consistent error handling, logging, and validation rules for missing or invalid photo dates in backend/src/PhotoOrganizer.Api/Middleware/ and backend/src/PhotoOrganizer.Application/Validators/",
+            "acceptanceCriteria": [
+              "Invalid or missing photo dates generate consistent validation and logging behavior.",
+              "API fails gracefully without breaking the rest of the library overview flow."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Api/Middleware/ and backend/src/PhotoOrganizer.Application/Validators/"
+          }
+        ]
+      },
+      {
+        "type": "Feature",
+        "id": "US1",
+        "title": "US1 - View photos organized by date",
+        "priority": "P1",
+        "requirements": ["FR-001", "FR-003", "FR-007", "FR-009", "FR-010"],
+        "description": "A user wants to browse their photo collection in a way that reflects the timeline of life events, trips, and daily moments without sorting through one large unstructured library. The organizer groups photos into albums based on dates, making it easy to revisit meaningful periods.\n\nIndependent Test: A user can create or review albums and confirm that photos are grouped into date-based collections that match the original capture periods.\n\nAcceptance Scenarios:\n1. Given a collection of photos from multiple dates, When the user opens the organizer, Then albums are grouped by date and displayed in a chronological structure.\n2. Given photos from the same day, When the user reviews the date group, Then they appear within the same album or date bucket without duplication.",
+        "children": [
+          {
+            "type": "Task",
+            "id": "T012",
+            "title": "Create the photo and album DTOs used by the API in backend/src/PhotoOrganizer.Application/Models/ and backend/src/PhotoOrganizer.Application/DTOs/",
+            "description": "Create the photo and album DTOs used by the API in backend/src/PhotoOrganizer.Application/Models/ and backend/src/PhotoOrganizer.Application/DTOs/",
+            "acceptanceCriteria": [
+              "DTOs are defined for album overview and photo grouping payloads.",
+              "The API contracts align with the domain model and date grouping flows."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Application/Models/ and backend/src/PhotoOrganizer.Application/DTOs/"
+          },
+          {
+            "type": "Task",
+            "id": "T013",
+            "title": "Implement the date-grouping service that assigns photos to albums and date buckets in backend/src/PhotoOrganizer.Application/Services/AlbumGroupingService.cs",
+            "description": "Implement the date-grouping service that assigns photos to albums and date buckets in backend/src/PhotoOrganizer.Application/Services/AlbumGroupingService.cs",
+            "acceptanceCriteria": [
+              "Photos are mapped to the proper date bucket and album grouping.",
+              "Photos from the same day are not duplicated across the same album collection."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Application/Services/AlbumGroupingService.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T014",
+            "title": "Implement the repository methods for album listing and date-group metadata in backend/src/PhotoOrganizer.Infrastructure/Repositories/AlbumRepository.cs",
+            "description": "Implement the repository methods for album listing and date-group metadata in backend/src/PhotoOrganizer.Infrastructure/Repositories/AlbumRepository.cs",
+            "acceptanceCriteria": [
+              "Repository exposes listable album groups and date metadata.",
+              "Album metadata supports date-based browsing and chronology."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Infrastructure/Repositories/AlbumRepository.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T015",
+            "title": "Implement the GET /api/albums endpoint in backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs",
+            "description": "Implement the GET /api/albums endpoint in backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs",
+            "acceptanceCriteria": [
+              "The endpoint returns date-grouped album data for the overview screen.",
+              "The API response supports the overview UI without requiring manual sorting."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T016",
+            "title": "Implement the Angular album overview page in frontend/src/app/pages/album-overview/album-overview.component.ts and album-overview.component.html",
+            "description": "Implement the Angular album overview page in frontend/src/app/pages/album-overview/album-overview.component.ts and album-overview.component.html",
+            "acceptanceCriteria": [
+              "The overview page renders albums in chronological order.",
+              "The page displays the date-grouped collection without requiring manual sorting."
+            ],
+            "filePath": "frontend/src/app/pages/album-overview/album-overview.component.ts and album-overview.component.html"
+          },
+          {
+            "type": "Task",
+            "id": "T017",
+            "title": "Implement reusable album tile UI in frontend/src/app/components/album-tile/album-tile.component.ts and album-tile.component.html",
+            "description": "Implement reusable album tile UI in frontend/src/app/components/album-tile/album-tile.component.ts and album-tile.component.html",
+            "acceptanceCriteria": [
+              "The album tile component renders consistently across the overview.",
+              "The tile supports the album metadata required by the overview and later preview flows."
+            ],
+            "filePath": "frontend/src/app/components/album-tile/album-tile.component.ts and album-tile.component.html"
+          },
+          {
+            "type": "Task",
+            "id": "T018",
+            "title": "Add the album service for fetching overview data and formatting date ranges in frontend/src/app/services/album.service.ts",
+            "description": "Add the album service for fetching overview data and formatting date ranges in frontend/src/app/services/album.service.ts",
+            "acceptanceCriteria": [
+              "The service retrieves overview data from the API.",
+              "Date ranges are formatted clearly for display in the album overview."
+            ],
+            "filePath": "frontend/src/app/services/album.service.ts"
+          },
+          {
+            "type": "Task",
+            "id": "T019",
+            "title": "Add fallback handling for unresolved or missing dates in backend/src/PhotoOrganizer.Application/Services/ and frontend/src/app/pages/album-overview/",
+            "description": "Add fallback handling for unresolved or missing dates in backend/src/PhotoOrganizer.Application/Services/ and frontend/src/app/pages/album-overview/",
+            "acceptanceCriteria": [
+              "Missing or incomplete photo dates are handled gracefully.",
+              "The overview remains usable even when metadata is incomplete or inconsistent."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Application/Services/ and frontend/src/app/pages/album-overview/"
+          }
+        ]
+      },
+      {
+        "type": "Feature",
+        "id": "US2",
+        "title": "US2 - Browse album previews at a glance",
+        "priority": "P1",
+        "requirements": ["FR-004", "FR-005", "FR-008"],
+        "description": "A user wants to see a visual summary of each album before opening it, so they can quickly identify the right collection without opening every album individually.\n\nIndependent Test: A user can scan the album overview and identify albums by cover image, title, date range, and photo count.\n\nAcceptance Scenarios:\n1. Given multiple albums exist, When the user views the main library overview, Then each album is shown as a tile with a preview image and basic metadata.\n2. Given an album contains several photos, When the user inspects the album tile, Then the tile indicates the date range and number of photos in an understandable format.",
+        "children": [
+          {
+            "type": "Task",
+            "id": "T020",
+            "title": "Create the album summary contract and preview metadata model in backend/src/PhotoOrganizer.Application/DTOs/AlbumSummaryDto.cs and frontend/src/app/models/album-summary.model.ts",
+            "description": "Create the album summary contract and preview metadata model in backend/src/PhotoOrganizer.Application/DTOs/AlbumSummaryDto.cs and frontend/src/app/models/album-summary.model.ts",
+            "acceptanceCriteria": [
+              "The backend and frontend share the album summary contract.",
+              "The preview metadata includes cover image, title, date range, and count fields."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Application/DTOs/AlbumSummaryDto.cs and frontend/src/app/models/album-summary.model.ts"
+          },
+          {
+            "type": "Task",
+            "id": "T021",
+            "title": "Implement cover-image selection and photo-count aggregation in backend/src/PhotoOrganizer.Application/Services/AlbumSummaryService.cs",
+            "description": "Implement cover-image selection and photo-count aggregation in backend/src/PhotoOrganizer.Application/Services/AlbumSummaryService.cs",
+            "acceptanceCriteria": [
+              "The service selects a representative cover image for each album.",
+              "Photo count aggregation is accurate for each album preview."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Application/Services/AlbumSummaryService.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T022",
+            "title": "Implement the album detail endpoint and photo list endpoint in backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs",
+            "description": "Implement the album detail endpoint and photo list endpoint in backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs",
+            "acceptanceCriteria": [
+              "Detail and photo list endpoints return album preview and metadata payloads.",
+              "The API supports album browsing without requiring each album to be opened directly."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T023",
+            "title": "Render the album tile preview and empty-state handling in frontend/src/app/components/album-tile/album-tile.component.ts and album-tile.component.css",
+            "description": "Render the album tile preview and empty-state handling in frontend/src/app/components/album-tile/album-tile.component.ts and album-tile.component.css",
+            "acceptanceCriteria": [
+              "The tile preview renders cover image, title, date range, and photo count.",
+              "Empty or missing album state displays a clear fallback message."
+            ],
+            "filePath": "frontend/src/app/components/album-tile/album-tile.component.ts and album-tile.component.css"
+          },
+          {
+            "type": "Task",
+            "id": "T024",
+            "title": "Connect the overview page to the album summary service and ensure sorting remains chronological in frontend/src/app/pages/album-overview/album-overview.component.ts",
+            "description": "Connect the overview page to the album summary service and ensure sorting remains chronological in frontend/src/app/pages/album-overview/album-overview.component.ts",
+            "acceptanceCriteria": [
+              "Album summary data is displayed on the overview page.",
+              "Album order remains chronological even after preview data is applied."
+            ],
+            "filePath": "frontend/src/app/pages/album-overview/album-overview.component.ts"
+          },
+          {
+            "type": "Task",
+            "id": "T025",
+            "title": "Add UX polish for label formatting, date range display, and album metadata clarity in frontend/src/app/components/album-tile/",
+            "description": "Add UX polish for label formatting, date range display, and album metadata clarity in frontend/src/app/components/album-tile/",
+            "acceptanceCriteria": [
+              "Date range labels are clear and readable.",
+              "Album metadata is legible and intuitively formatted for quick recognition."
+            ],
+            "filePath": "frontend/src/app/components/album-tile/"
+          }
+        ]
+      },
+      {
+        "type": "Feature",
+        "id": "US3",
+        "title": "US3 - Manage album organization over time",
+        "priority": "P2",
+        "requirements": ["FR-002", "FR-006", "FR-009"],
+        "description": "A user wants to keep albums meaningful as new photos are added, including occasions where the date grouping changes or a new album is created for a recurring event.\n\nIndependent Test: A user can create, rename, or update an album and confirm the overview reflects the new organization without losing context.\n\nAcceptance Scenarios:\n1. Given a user adds photos from a new date, When the organizer updates the album view, Then the date-based grouping reflects the newest content.\n2. Given a user renames an album, When the album is refreshed in the overview, Then the new name appears without changing the underlying date grouping.",
+        "children": [
+          {
+            "type": "Task",
+            "id": "T026",
+            "title": "Add create and update request models for album management in backend/src/PhotoOrganizer.Application/DTOs/CreateAlbumRequest.cs and UpdateAlbumRequest.cs",
+            "description": "Add create and update request models for album management in backend/src/PhotoOrganizer.Application/DTOs/CreateAlbumRequest.cs and UpdateAlbumRequest.cs",
+            "acceptanceCriteria": [
+              "Create and update models support album management actions.",
+              "Request models validate album name and update payload requirements."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Application/DTOs/CreateAlbumRequest.cs and UpdateAlbumRequest.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T027",
+            "title": "Implement album create/update logic and validation in backend/src/PhotoOrganizer.Application/Services/AlbumManagementService.cs",
+            "description": "Implement album create/update logic and validation in backend/src/PhotoOrganizer.Application/Services/AlbumManagementService.cs",
+            "acceptanceCriteria": [
+              "Album create and update flows validate input correctly.",
+              "The service preserves underlying date grouping while allowing album updates."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Application/Services/AlbumManagementService.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T028",
+            "title": "Add POST /api/albums and PATCH /api/albums/{albumId} endpoints in backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs",
+            "description": "Add POST /api/albums and PATCH /api/albums/{albumId} endpoints in backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs",
+            "acceptanceCriteria": [
+              "Endpoint support includes creating and updating albums.",
+              "The API responds clearly for successful and failed album management actions."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Api/Controllers/AlbumController.cs"
+          },
+          {
+            "type": "Task",
+            "id": "T029",
+            "title": "Build the album create/edit form and validation UX in frontend/src/app/components/album-editor/album-editor.component.ts and album-editor.component.html",
+            "description": "Build the album create/edit form and validation UX in frontend/src/app/components/album-editor/album-editor.component.ts and album-editor.component.html",
+            "acceptanceCriteria": [
+              "The form supports create and edit flows for albums.",
+              "Validation rules match backend requirements for album names and updates."
+            ],
+            "filePath": "frontend/src/app/components/album-editor/album-editor.component.ts and album-editor.component.html"
+          },
+          {
+            "type": "Task",
+            "id": "T030",
+            "title": "Connect album create/edit flows to the backend and refresh the overview after successful updates in frontend/src/app/services/album.service.ts and frontend/src/app/pages/album-overview/",
+            "description": "Connect album create/edit flows to the backend and refresh the overview after successful updates in frontend/src/app/services/album.service.ts and frontend/src/app/pages/album-overview/",
+            "acceptanceCriteria": [
+              "Updates are sent to the backend successfully.",
+              "The overview refreshes after album creation or edit operations."
+            ],
+            "filePath": "frontend/src/app/services/album.service.ts and frontend/src/app/pages/album-overview/"
+          },
+          {
+            "type": "Task",
+            "id": "T031",
+            "title": "Add stale data handling and reload flow for albums when underlying metadata changes in frontend/src/app/pages/album-overview/",
+            "description": "Add stale data handling and reload flow for albums when underlying metadata changes in frontend/src/app/pages/album-overview/",
+            "acceptanceCriteria": [
+              "The overview handles stale or outdated album metadata gracefully.",
+              "Album reloads keep the collection synchronized with backend changes."
+            ],
+            "filePath": "frontend/src/app/pages/album-overview/"
+          }
+        ]
+      },
+      {
+        "type": "Feature",
+        "title": "Polish and Cross-Cutting Concerns",
+        "requirements": ["FR-001", "FR-004", "FR-005", "FR-006", "FR-007"],
+        "description": "Final quality improvements and validation across all user stories to ensure the app is production-ready and consistent with the spec.",
+        "children": [
+          {
+            "type": "Task",
+            "id": "T032",
+            "title": "Review the local file storage, SQL Server metadata, and date fallback behavior against the spec and data model in backend/src/PhotoOrganizer.Infrastructure/ and backend/src/PhotoOrganizer.Application/",
+            "description": "Review the local file storage, SQL Server metadata, and date fallback behavior against the spec and data model in backend/src/PhotoOrganizer.Infrastructure/ and backend/src/PhotoOrganizer.Application/",
+            "acceptanceCriteria": [
+              "Storage, metadata, and fallback behavior match the product spec.",
+              "The feature remains stable when photo dates are missing or inconsistent."
+            ],
+            "filePath": "backend/src/PhotoOrganizer.Infrastructure/ and backend/src/PhotoOrganizer.Application/"
+          },
+          {
+            "type": "Task",
+            "id": "T033",
+            "title": "Add final UI polish for tile spacing, hover states, and date readability in frontend/src/app/components/album-tile/ and frontend/src/app/pages/album-overview/",
+            "description": "Add final UI polish for tile spacing, hover states, and date readability in frontend/src/app/components/album-tile/ and frontend/src/app/pages/album-overview/",
+            "acceptanceCriteria": [
+              "Overview spacing and hover states are polished.",
+              "Date readability is improved for album tiles and overview cards."
+            ],
+            "filePath": "frontend/src/app/components/album-tile/ and frontend/src/app/pages/album-overview/"
+          },
+          {
+            "type": "Task",
+            "id": "T034",
+            "title": "Update the quickstart and operational guidance to reflect local setup, SQL Server Windows authentication, and image storage requirements in specs/001-photo-album-organizer/quickstart.md",
+            "description": "Update the quickstart and operational guidance to reflect local setup, SQL Server Windows authentication, and image storage requirements in specs/001-photo-album-organizer/quickstart.md",
+            "acceptanceCriteria": [
+              "Quickstart documentation reflects local setup requirements.",
+              "Operational guidance includes Windows authentication and image storage configuration."
+            ],
+            "filePath": "specs/001-photo-album-organizer/quickstart.md"
+          },
+          {
+            "type": "Task",
+            "id": "T035",
+            "title": "Run the end-to-end validation flow from specs/001-photo-album-organizer/quickstart.md and confirm the album overview, tile previews, and album management flows work together",
+            "description": "Run the end-to-end validation flow from specs/001-photo-album-organizer/quickstart.md and confirm the album overview, tile previews, and album management flows work together",
+            "acceptanceCriteria": [
+              "The overview, tile previews, and management flows work together successfully.",
+              "Validation confirms the date-grouped album experience is complete across all stories."
+            ],
+            "filePath": "specs/001-photo-album-organizer/quickstart.md"
+          }
+        ]
+      }
+    ]
+  }
+}

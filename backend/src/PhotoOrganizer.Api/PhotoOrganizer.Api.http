@@ -1,0 +1,6 @@
+@PhotoOrganizer.Api_HostAddress = http://localhost:5161
+
+GET {{PhotoOrganizer.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
